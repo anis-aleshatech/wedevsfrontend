@@ -4,25 +4,22 @@
     <Product />
     <Product />
     <Product />
-    <Product />
-    <Product />
-    <Product />
-    <Product />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import Product from "@/components/Product.vue";
 
+import Product from "@/components/Product.vue";
 export default {
-  name: "Home",
+ name: "ProductPage",
   components: {
     Product,
   },
-};
+}
 </script>
-<style  scoped>
+
+<style scoped>
+ 
 .product { 
   display: flex;
   flex-wrap: wrap;
@@ -30,4 +27,3 @@ export default {
   clear: both;
 }
 </style>
-
