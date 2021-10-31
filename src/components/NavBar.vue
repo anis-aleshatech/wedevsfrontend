@@ -42,6 +42,10 @@ header {
     background: #2c2c2c;
     padding: 0 20px;
     color: #fff;
+    position: sticky;
+    top: 0px;
+    clear: both;
+    z-index: 666;
 }
 .brand-logo {
     max-width: 75px;

@@ -1,6 +1,6 @@
 import Api from "./Api";
 
-const END_POINT = 'cart';
+const END_POINT = 'order';
 
 export default {
     all() {
@@ -11,11 +11,5 @@ export default {
         return Api.post(END_POINT, data);
     },
 
-    delete(id) {
-        return Api.delete(`${END_POINT}/${id}`);
-    },
-
-    deleteAll() {
-        return Api.delete(END_POINT);
-    }
+    
 }
