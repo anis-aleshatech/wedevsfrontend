@@ -1,7 +1,7 @@
 <template>
    <header>
         <div class="brand-logo">
-            <a href="#"><img src="../assets/logo.png" alt="Brand Logo"></a>
+            <router-link to="/"><img src="../assets/logo.png" alt="Brand Logo"></router-link>
         </div>
 
         <input type="checkbox" id="toggle-btn">
@@ -11,16 +11,19 @@
             <ul class="navigation"> 
                 <li><router-link to="/"><i class="fas fa-house"></i>Home</router-link></li>
                 <li><router-link to="/product"><i class="fas fa-image"></i> Product</router-link></li> 
-                <li><a href="#"><i class="fa fa-cart"></i>Cart</a></li> 
+                <li><router-link to="/cart"><i class="fas fa-cart"></i> Cart({{cartItemCount}})</router-link></li> 
             </ul>
         </nav>
     </header>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-  name:'NavBar'
-
+  name:'NavBar',
+ computed: {
+    ...mapGetters("cart", ["cartItemCount"])
+  }
 }
 </script>
 

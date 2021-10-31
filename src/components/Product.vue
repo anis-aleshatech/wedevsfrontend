@@ -2,14 +2,20 @@
   <div class="productItem">
     <div class="item">
       <div class="card">
-        <a href="#">
-          <img src="https://via.placeholder.com/300/0000FF/808080" alt="Avatar" style="width: 100%" />
-        </a>
+        <router-link :to="{name: 'SingleProduct', params: {id: product.id}}">
+          <img :src="product.image" alt="Avatar" style="width: 100%" />
+        </router-link>
         <div class="details">
-         <a href="#"><h2><b>John Doe</b></h2></a> 
-          <p class="price">Price: <b>$300</b></p>
+          <a href="#"
+            ><h2>
+              <b><router-link :to="{name: 'SingleProduct', params: {id: product.id}}">{{ product.name }} </router-link></b>
+            </h2></a
+          >
+          <p class="price">
+            Price: <b>${{ product.price }}</b>
+          </p>
           <div class="addoCart">
-              <button type="submit">Add To Cart</button>
+            <button type="submit"  @click="addToCart()">Add To Cart</button>
           </div>
         </div>
       </div>
@@ -18,15 +24,29 @@
 </template>
 
 <script>
+
+import { mapActions } from "vuex";
 export default {
+  props: ["product"],
   name: "Product",
+  methods: {
+    ...mapActions("cart", ["addProductToCart"]),
+
+    addToCart() { 
+      this.addProductToCart({
+        product: this.product,
+        quantity: 1
+      });
+    }
+  }
 };
 </script>
 
+
 <style scoped>
-.productItem{
-    width: 300px;
-    margin: 20px 0px;
+.productItem {
+  width: 300px;
+  margin: 20px 0px;
 }
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -42,7 +62,7 @@ export default {
   margin-top: 10px;
   padding: 2px 16px;
 }
-.details .price{
+.details .price {
   margin-top: 10px;
 }
 .details .addoCart button {
@@ -50,16 +70,15 @@ export default {
   margin: 20px;
   cursor: pointer;
   color: #fff;
-  background-color: #000000;  
-    font-size: 20px;
+  background-color: #000000;
+  font-size: 20px;
 }
 .details .addoCart button:hover {
- 
   color: #fff;
-  background-color: #2c2c2c; 
-  transition: 0.4s; 
+  background-color: #2c2c2c;
+  transition: 0.4s;
 }
-a{
+a {
   text-decoration: none;
 }
 </style>
