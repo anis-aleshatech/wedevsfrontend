@@ -47,19 +47,28 @@ export default {
       loginForm: {
         email: "",
         password: "",
+
       },
+      self:this
     };
   },
   methods: {
-    async login() {
-      await this.$store .dispatch("user/loginSubmitAction", this.loginForm, { root: true })
-        .then((res) => {
-          if (res.data) {
-            this.$router.push("/profile");
-          }
-        }).catch((error)=>{
-           console.log(error.message); 
+      login() { 
+        this.$store.dispatch("user/loginSubmitAction", this.loginForm, { root: true })
+         .then(response=>{   
+           console.log(response);
+           if(response.data.data.role=='user'){
+             this.$router.push("/profile"); 
+           }else{
+             this.$router.push("/dashboard"); 
+           }
+            this.$swal({ 
+              text: response.data.message,
+              timer: 3000,
+              type: "success",
+            });
         })
+         
     },
   },
 };

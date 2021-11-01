@@ -8,15 +8,19 @@ export const loginSubmitAction = ({ commit, dispatch }, loginForm ) => {
     }, { root: true });
 
     
-    
-    User.login(
-        loginForm
-    ).then((res)=>{
-        commit('LOGIN_SUBMIT', res.data);
-        
-    }).catch((error)=>{
-        console.log(error.message); 
-    })
+    try {
+        User.login(
+            loginForm
+        ).then((res)=>{
+            commit('LOGIN_SUBMIT', res.data);
+            console.log(res.data.data.role);
+        }).catch((error)=>{
+            console.log(error.message); 
+        })
+    } catch (error) {
+        console.log(error); 
+    }
+   
 }
 
 
