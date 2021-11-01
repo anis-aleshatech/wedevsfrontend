@@ -1,26 +1,26 @@
 import User from "../../../apis/User";
-export const loginSubmitAction = ({ commit, dispatch }, { loginForm }) => {
-    commit('LOGIN_SUBMIT', { loginForm });
+export const loginSubmitAction = ({ commit, dispatch }, loginForm ) => {
+   
 
     dispatch('addNotification', {
         type: 'success',
         message: 'Order Submit Successfully.'
     }, { root: true });
 
-    console.log(loginForm);
+    
     
     User.login(
         loginForm
     ).then((res)=>{
-        console.log(res); 
+        commit('LOGIN_SUBMIT', res.data);
         
     }).catch((error)=>{
-        console.log(error); 
+        console.log(error.message); 
     })
 }
 
 
-export const registrationSubmitAction = ({ commit, dispatch }, { registrationForm }) => {
+export const registrationSubmitAction = ({ commit, dispatch },  registrationForm ) => {
     commit('REGISTRATION_SUBMIT', { registrationForm });
 
     dispatch('addNotification', {
@@ -28,7 +28,6 @@ export const registrationSubmitAction = ({ commit, dispatch }, { registrationFor
         message: 'Registration Successfully.'
     }, { root: true });
 
-    console.log(registrationForm);
     
     User.register(
         registrationForm
@@ -36,7 +35,7 @@ export const registrationSubmitAction = ({ commit, dispatch }, { registrationFor
         console.log(res); 
         
     }).catch((error)=>{
-        console.log(error); 
+        console.log(error.message); 
     })
 }
 

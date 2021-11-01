@@ -92,7 +92,6 @@
       </div>
     </div>
   </form>
-  {{form}}
 </template>
 
 <script>
