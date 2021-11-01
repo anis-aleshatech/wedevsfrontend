@@ -1,5 +1,5 @@
 <template>
-  <div class="maindiv" v-if="admin">
+  <div class="maindiv" v-if="user">
     <NavBar />
     <router-view />
     <Footer />
@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      admin: true,
+      user: true,
     };
   },
 };

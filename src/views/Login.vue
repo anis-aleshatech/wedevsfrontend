@@ -36,8 +36,7 @@
         <a class="underlineHover" href="#">Forgot Password?</a>
       </div>
     </div>
-  </div>
-  {{ loginForm }}
+  </div> 
 </template>
 
 <script>
@@ -53,13 +52,14 @@ export default {
   },
   methods: {
     async login() {
-      await this.$store
-        .dispatch("user/loginSubmitAction", this.loginForm, { root: true })
+      await this.$store .dispatch("user/loginSubmitAction", this.loginForm, { root: true })
         .then((res) => {
           if (res.data) {
             this.$router.push("/profile");
           }
-        });
+        }).catch((error)=>{
+           console.log(error.message); 
+        })
     },
   },
 };
