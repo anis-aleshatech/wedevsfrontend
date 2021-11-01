@@ -9,8 +9,7 @@
 
         <nav>
             <ul class="navigation"> 
-                <li><router-link to="/">Home</router-link></li>
-                <li><router-link to="/product">Product</router-link></li> 
+                <li><router-link to="/">Home</router-link></li> 
                 <li><router-link to="/cart">Cart({{cartItemCount}})</router-link></li> 
                 <li><router-link to="/checkout">  Checkout</router-link></li> 
                 <li><router-link to="/login"> Login</router-link></li> 

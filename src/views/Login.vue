@@ -18,14 +18,14 @@
           type="text"
           id="login"
           class="fadeIn second"
-          v-model="form.email"
+          v-model="loginForm.email"
           placeholder="email"
         />
         <input
           type="password"
           id="password"
           class="fadeIn third"
-          v-model="form.password"
+          v-model="loginForm.password"
           placeholder="password"
         />
         <input type="submit" class="fadeIn fourth" value="Log In" />
@@ -37,25 +37,29 @@
       </div>
     </div>
   </div>
-  {{ form}}
+  {{ loginForm }}
 </template>
 
 <script>
- 
 export default {
   name: "login",
- data() {
+  data() {
     return {
-      form: {
+      loginForm: {
         email: "",
-        password: "", 
-      }, 
+        password: "",
+      },
     };
   },
   methods: {
     async login() {
-      await this.$store.dispatch("loginSubmitAction", this.form);
-    //   this.$router.push("/profile");
+      await this.$store
+        .dispatch("user/loginSubmitAction", this.loginForm, { root: true })
+        .then((res) => {
+          if (res.data) {
+            this.$router.push("/profile");
+          }
+        });
     },
   },
 };
@@ -181,7 +185,8 @@ input[type="reset"]:active {
   transform: scale(0.95);
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"],
+input[type="password"] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;

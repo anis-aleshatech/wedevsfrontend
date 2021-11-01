@@ -92,6 +92,7 @@
       </div>
     </div>
   </form>
+  {{form}}
 </template>
 
 <script>
@@ -118,11 +119,11 @@ export default {
   },
   methods: {
     ...mapActions("cart", ["removeProductFromCart", "clearCartItems"]),
-    ...mapActions("order", ["removeProductFromCart", "orderSubmitAction"]),
+    ...mapActions("order", ["removeProductFromCart"]),
 
     
     async checkout() {
-      await this.$store.dispatch("orderSubmitAction", this.form)
+      await this.$store.dispatch("order/orderSubmitAction", this.form)
       this.$router.push('/')
 
     },

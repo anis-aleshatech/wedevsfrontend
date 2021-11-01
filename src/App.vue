@@ -1,18 +1,30 @@
 <template>
-    <NavBar/>
-  <router-view />
-  <Footer/>
+  <div class="maindiv" v-if="admin">
+    <NavBar />
+    <router-view />
+    <Footer />
+  </div>
+  <div class="maindiv" v-else>
+    <Dashboard /> 
+  </div>
 </template>
 <script>
 import NavBar from "@/components/NavBar.vue";
 import Footer from "@/components/Footer.vue";
+import Dashboard from "@/views/admin/Dashboard.vue";
 export default {
-  name:"App",
-   components: {
+  name: "App",
+  components: {
     NavBar,
     Footer,
+    Dashboard,
   },
-}
+  data() {
+    return {
+      admin: true,
+    };
+  },
+};
 </script>
 
 
