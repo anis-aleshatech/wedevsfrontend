@@ -10,6 +10,7 @@ import createPersistedState from "vuex-persistedstate";
 import product from "./modules/product";
 import cart from "./modules/cart";
 import order from "./modules/order";
+import user from "./modules/user";
 export default createStore({
   state,
   getters,
@@ -19,7 +20,8 @@ export default createStore({
   modules: {
       product,
       cart, 
-      order
+      order,
+      user
   },
 
   plugins: [createPersistedState()],

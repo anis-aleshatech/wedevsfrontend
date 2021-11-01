@@ -1,58 +1,64 @@
 <template>
-  <div class="checkoutContainer">
-    <div class="cart">
-      <table border="2" cellpedding="10px">
-        <thead>
-          <tr>
-            <th>SL</th>
-            <th>Image</th>
-            <th>Product Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <template v-for="items in cart" :key="items.product">
-            <tr v-for="(item, index) in items" :key="item.id">
-              <td>{{ index + 1 }}</td>
+  <form @submit.prevent="checkout()">
+    <div class="checkoutContainer">
+      <div class="cart">
+        <h3>Your Cart Item</h3>
+        <table border="2" cellpedding="10px">
+          <thead>
+            <tr>
+              <th>SL</th>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template v-for="items in cart" :key="items.product">
+              <tr v-for="(item, index) in items" :key="item.id">
+                <td>{{ index + 1 }}</td>
+                <td>
+                  <img :src="item.product.image" alt="{{ item.product.name}}" />
+                </td>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.product.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.product.price * item.quantity }}</td>
+                <td>
+                  <a
+                    href="#"
+                    @click.prevent="removeProductFromCart(item.product)"
+                    >Remove</a
+                  >
+                </td>
+              </tr>
+            </template>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5" style="padding: 20px">Total</td>
+              <td>${{ totlalPrice }}</td>
               <td>
-                <img :src="item.product.image" alt="{{ item.product.name}}" />
-              </td>
-              <td>{{ item.product.name }}</td>
-              <td>{{ item.product.price }}</td>
-              <td>{{ item.quantity }}</td>
-              <td>{{ item.product.price * item.quantity }}</td>
-              <td>
-                <a href="#" @click.prevent="removeProductFromCart(item.product)"
-                  >Remove</a
-                >
+                <button type="submit" @click.prevent="clearCartItems()">
+                  Clear Cart
+                </button>
               </td>
             </tr>
-          </template>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="5" style="padding: 20px">Total</td>
-            <td>${{ totlalPrice }}</td>
-            <td>
-              <button type="submit" @click.prevent="clearCartItems()">
-                Clear Cart
-              </button>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-    <div class="container">
-      <form @submit.prevent="checkout()">
+          </tfoot>
+        </table>
+      </div>
+      <div class="container">
+        <h3>Customer Information</h3>
+
         <label for="fname">Your Name</label>
         <input
           type="text"
           id="fname"
           v-model="form.customer_name"
           placeholder="Your name.."
+          required
         />
 
         <label for="lname">Mobile Number</label>
@@ -61,10 +67,11 @@
           id="lname"
           v-model="form.customer_mobile"
           placeholder="Mobile Number"
+          required
         />
 
         <label for="country">District</label>
-        <select id="country" v-model="form.district">
+        <select id="country" v-model="form.district" required>
           <option selected value="Dhaka">Dhaka</option>
           <option value="Comilla">Comilla</option>
           <option value="Khulna">Khulna</option>
@@ -74,17 +81,17 @@
 
         <label for="address">Address</label>
         <textarea
+          required
           id="address"
           v-model="form.address"
           placeholder="Your Address"
           style="height: 200px"
         ></textarea>
-        <input type="hidden" v-model="form.cart" />
+        <input type="hidden" v-model="form.product" />
         <input type="submit" value="Submit" />
-      </form>
-      
+      </div>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -94,42 +101,41 @@ export default {
   data() {
     return {
       form: {
-        customer_name: "bhbhb",
-        customer_mobile: "020202020",
-        district: "njnj",
+        customer_name: "",
+        customer_mobile: "",
+        district: "",
         user_id: 1,
         total_price: 10,
-        product: this.$store.state.cart,
+        products: [],
       },
-      cart: this.$store.state.cart, 
+      cart: this.$store.state.cart,
     };
   },
-
+  created() {
+    let cp = this.$store.state.cart.cart;
+    this.form.products = cp;
+    this.form.total_price = this.totlalPrice;
+  },
   methods: {
     ...mapActions("cart", ["removeProductFromCart", "clearCartItems"]),
     ...mapActions("order", ["removeProductFromCart", "orderSubmitAction"]),
 
-    checkout() {
-      this.orderSubmitAction({
-        form: this.form,
-      });
+    
+    async checkout() {
+      await this.$store.dispatch("orderSubmitAction", this.form)
+      this.$router.push('/')
+
     },
   },
-   
+
   computed: {
-    totlalPrice() { 
+   
+    totlalPrice() {
       let total = 0;
       this.$store.state.cart.cart.forEach((item) => {
         total += item.product.price * item.quantity;
       });
       return total;
-    },
-    cartProduct() {
-      let cp = [];
-      this.$store.state.cart.cart.forEach((item) => {
-        this.product.push(item);
-      });
-      return cp;
     },
   },
 };
@@ -205,6 +211,6 @@ input[type="submit"]:hover {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
-  width: 600px;
+  width: 40%;
 }
 </style>

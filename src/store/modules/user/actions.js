@@ -1,6 +1,6 @@
-import Order from "../../../apis/Order";
-export const orderSubmitAction = ({ commit, dispatch }, { form }) => {
-    commit('ORDER_SUBMIT', { form });
+import User from "../../../apis/User";
+export const loginSubmitAction = ({ commit, dispatch }, { form }) => {
+    commit('LOGIN_SUBMIT', { form });
 
     dispatch('addNotification', {
         type: 'success',
@@ -9,7 +9,7 @@ export const orderSubmitAction = ({ commit, dispatch }, { form }) => {
 
     console.log(form);
     
-    Order.store(
+    User.login(
         form
     ).then((res)=>{
         console.log(res); 
