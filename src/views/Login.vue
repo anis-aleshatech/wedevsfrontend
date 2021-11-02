@@ -33,14 +33,14 @@
 
       <!-- Remind Passowrd -->
       <div id="formFooter">
-        <a class="underlineHover" href="#">Forgot Password?</a>
+        {{ $store.state.user.permission }}
       </div>
     </div>
   </div>
-  {{ loginForm }}
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "login",
   data() {
@@ -49,16 +49,49 @@ export default {
         email: "",
         password: "",
       },
+      self: this,
     };
   },
   methods: {
-    async login() {
-      await this.$store
-        .dispatch("user/loginSubmitAction", this.loginForm, { root: true })
-        .then((res) => {
-          if (res.data) {
-            this.$router.push("/profile");
+    // login() {
+    //   this.$store.dispatch("user/loginSubmitAction", this.loginForm)
+    //    .then(response=>{
+    //      localStorage.setItem('token',  response.data.data.token); 
+    //      if(response.data.data.role=='user'){
+    //        this.$router.push("/checkout");
+    //      }else{
+    //        this.$router.push("/dashboard");
+    //      }
+    //       this.$swal({
+    //         text: response.data.message,
+    //         timer: 3000,
+    //         type: "success",
+    //       });
+    //   })
+    // }
+    login() {
+      axios
+        .post("http://127.0.0.1:8000/api/v1/login", this.loginForm)
+        .then((response) => {
+          this.$store.state.user = response.data.data; 
+          localStorage.setItem('token',  response.data.data.token); 
+          if (response.data.data.role == "user") {
+            this.$router.push("/checkout");
+          } else {
+            this.$router.push("/dashboard");
           }
+          this.$swal({
+            text: response.data.message,
+            timer: 3000,
+            type: "success",
+          });
+        })
+        .catch((error) => {
+           this.$swal({ 
+              text: error,
+              timer: 3000,
+              type: "error",
+            });
         });
     },
   },

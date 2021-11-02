@@ -73,13 +73,22 @@ export default {
   },
   methods: {
     async registration() {
-      await this.$store.dispatch("user/registrationSubmitAction", this.registrationForm, {
-        root: true,
-      }).then((res)=>{
-          if(res){
-            this.$router.push("/login");
-          }
-      })
+      await this.$store.dispatch("user/registrationSubmitAction", this.registrationForm).then((res)=>{
+            this.$swal({ 
+              text: res.data.message,
+              timer: 3000,
+              type: "success",
+            });
+
+            this.$router.push("/profile");
+          
+      }).catch((error) => {
+          this.$swal({ 
+            text: error.message,
+            timer: 3000,
+            type: "warning",
+          });
+        });
         
     },
   },

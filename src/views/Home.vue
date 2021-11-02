@@ -4,8 +4,7 @@
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
+<script> 
 import Product from "@/components/Product.vue";
 import { mapState, mapActions } from "vuex";
 export default {

@@ -2,14 +2,19 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
-import store from "./store"; 
-import { sync } from 'vuex-router-sync'
-const unsync = sync(store, router) // done. Returns an unsync callback fn
+import store from "./store";  
+import VueSweetalert2 from 'vue-sweetalert2';
 
-// bootstrap your app...
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-// During app/Vue teardown (e.g., you only use Vue.js in a portion of your app
-// and you navigate away from that portion and want to release/destroy
-// Vue components/resources)
-unsync() // Unsyncs store from router
-createApp(App).use(store).use(router).mount("#app");
+import 'sweetalert2/dist/sweetalert2.min.css';  
+const options = {
+    confirmButtonColor: '#41b882',
+    cancelButtonColor: '#ff7674',
+    toast:true,
+    position:'top-end',
+    isDismissed: true,
+}; 
+
+createApp(App).use(store).use(router).use(VueSweetalert2, options).mount("#app");
