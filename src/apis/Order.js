@@ -1,6 +1,6 @@
 import Api from "./Api";
 
-const END_POINT = 'order';
+const END_POINT = 'admin/order';
 
 export default {
     all() {
