@@ -123,8 +123,8 @@ export default {
     
     async checkout() {
       await this.$store.dispatch("order/orderSubmitAction", this.form)
-      this.$router.push('/')
-
+      this.$router.push('/profile')
+      this.$store.state.order=null;
     },
   },
 

@@ -6,7 +6,9 @@ const Api = axios.create({
     timeout: 90000,
     headers: { Accept: 'application/json' },
 });
-let AUTH_TOKEN='';
+ 
+let AUTH_TOKEN=localStorage.getItem('token' );
+console.log(AUTH_TOKEN);
 axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'; 
 export default Api;
